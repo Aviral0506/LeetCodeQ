@@ -1,15 +1,12 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        int i = 0;
-        int n = nums.size() - 1;
-        while(i < n){
-            if(nums[i] != nums[i + 1]){
-                i++;
-            }else{
+        unordered_map<int, int> freq;
+        for(int x : nums) {
+            if(freq[x] >= 1) {
                 return true;
             }
+            freq[x]++;
         }
         return false;
     }

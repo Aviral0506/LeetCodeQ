@@ -1,7 +1,7 @@
 class Solution {
 public:
     int t[1001][1001];
-    bool solve(const string& s, int i , int j) {
+    bool solve(string& s, int i , int j) {
         if(i >= j) {
             return 1;
         }

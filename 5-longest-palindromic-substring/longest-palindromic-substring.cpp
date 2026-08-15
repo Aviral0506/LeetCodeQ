@@ -1,28 +1,33 @@
 class Solution {
 public:
-    string expand(string s, int left , int right) {
-        while(left >= 0 && right < s.size() && s[left] == s[right]) {
-            left--;
-            right++;
+    int t[1001][1001];
+    bool solve(const string& s, int i , int j) {
+        if(i >= j) {
+            return 1;
         }
-        return s.substr(left + 1, right - left - 1);
+        if(t[i][j] != -1) {
+            return t[i][j];
+        }
+        if(s[i] == s[j]) {
+            return t[i][j] = solve(s, i + 1, j - 1);
+        }
+        return t[i][j] = 0;
     }
     string longestPalindrome(string s) {
-        string ans = "";
+        int maxLen = INT_MIN;
+        int sp = 0;
         int n = s.size();
+        memset(t, -1, sizeof(t));
         for(int i = 0; i < n; i++) {
-
-            string p1 = expand(s, i, i);
-
-            string p2 = expand(s, i, i + 1);
-
-            if(p1.size() > ans.size()) {
-                ans = p1;
-            }
-            if(p2.size() > ans.size()) {
-                ans = p2;
+            for(int j = i; j < n; j++) {
+                if(solve(s, i , j) == true) {
+                    if(j - i + 1 > maxLen) {
+                        maxLen = j - i + 1;
+                        sp = i;
+                    }  
+                }
             }
         }
-        return ans;
+        return s.substr(sp, maxLen);
     }
 };
